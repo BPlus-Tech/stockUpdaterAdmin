@@ -76,7 +76,7 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-   this.getFirestoreData('2021/3/5');
+   this.getFirestoreData(new Date().toLocaleDateString());
     this.chartColor = "#FFFFFF";
     this.canvas = document.getElementById("bigDashboardChart");
     this.ctx = this.canvas.getContext("2d");
@@ -431,10 +431,12 @@ export class DashboardComponent implements OnInit {
   }
 
   getFirestoreData(date) {
+      var today = new Date();
+      var tempdate = today.getFullYear() +"/"+ (today.getMonth() + 1) +"/"+today.getDate();
       // var table = document.getElementById("tbData");
       // table.innerHTML="";
       // var tr="";
-      this.firestore.collection('stock',ref => ref.where('date', "==", '2021/3/8')).snapshotChanges().subscribe((data) => {
+      this.firestore.collection('stock',ref => ref.where('date', "==", tempdate)).snapshotChanges().subscribe((data) => {
           this.tableData =[];
           data.map(e => {
               var x = e.payload.doc.data();
